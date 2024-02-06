@@ -32,7 +32,8 @@ jobs:
           push: true
           tags: nhuttu.azurecr.io/${{ secrets.ACR_USERNAME }}/webimage:${{ github.sha }}
           file: ./Dockerfile
-          secrets: NEXT_PUBLIC_TESTATAAN="MOII"
+          secrets: |
+            NEXT_PUBLIC_TESTATAAN="MOII"
 
   deploy:
     runs-on: ubuntu-latest
