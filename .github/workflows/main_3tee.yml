@@ -47,5 +47,5 @@ jobs:
         with:
           app-name: "3tee"
           slot-name: "production"
-          publish-profile: ${{ secrets.ACR_PUBLISHPROFILE }}
+          publish-profile: ${{ secrets.AZURE_PUBLISHPROFILE }}
           images: "nhuttu.azurecr.io/${{ secrets.ACR_USERNAME }}/webimage:${{ github.sha }}"
