@@ -32,9 +32,8 @@ jobs:
           push: true
           tags: mcr.microsoft.com/${{ secrets.ACR_USERNAME }}/appsvc/staticsite:${{ github.sha }}
           file: ./Dockerfile
-          secrets:
-            | AZURE_CONNECTION_STRING=${{secrets.AZURE_CONNECTION_STRING}}
-            | NEXT_PUBLIC_TESTATAAN="HEI KAIKKI AZURESSA!"
+          secrets: AZURE_CONNECTION_STRING=${{secrets.AZURE_CONNECTION_STRING}}
+            NEXT_PUBLIC_TESTATAAN="HEI KAIKKI AZURESSA!"
 
   deploy:
     runs-on: ubuntu-latest
