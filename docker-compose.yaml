@@ -2,7 +2,7 @@ version: "1"
 
 services:
   app:
-    image: nhuttu.azurecr.io/webimage:latest
+    image: nhuttu.azurecr.io/nhuttu/webimage:latest
     build: .
     env_file:
       - .env
