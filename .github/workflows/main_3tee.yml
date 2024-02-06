@@ -32,8 +32,9 @@ jobs:
           push: true
           tags: nhuttu.azurecr.io/${{ secrets.ACR_USERNAME }}/webimage:${{ github.sha }}
           file: ./Dockerfile
-          secrets: AZURE_CONNECTION_STRING=${{secrets.AZURE_CONNECTION_STRING}}
-            NEXT_PUBLIC_TESTATAAN=${{secrets.NEXT_PUBLIC_TESTATAAN}}
+          secrets: | 
+          "AZURE_CONNECTION_STRING=${{secrets.AZURE_CONNECTION_STRING}}" 
+          "NEXT_PUBLIC_TESTATAAN=${{secrets.NEXT_PUBLIC_TESTATAAN}}"
 
   deploy:
     runs-on: ubuntu-latest
