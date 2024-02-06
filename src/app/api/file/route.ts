@@ -9,59 +9,67 @@ const AZURE_STORAGE_CONNECTION_STRING =
 console.log(AZURE_STORAGE_CONNECTION_STRING, "heiii");
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const data = await req.formData();
+  try {
+    const data = await req.formData();
 
-  const file: File | null = data.get("file") as unknown as File;
+    const file: File | null = data.get("file") as unknown as File;
 
-  console.log(file);
+    console.log(file);
 
-  const blobServiceClient = BlobServiceClient.fromConnectionString(
-    AZURE_STORAGE_CONNECTION_STRING,
-  );
+    const blobServiceClient = BlobServiceClient.fromConnectionString(
+      AZURE_STORAGE_CONNECTION_STRING,
+    );
 
-  const containerName = "$web";
+    const containerName = "$web";
 
-  const containerClient = blobServiceClient.getContainerClient(containerName);
+    const containerClient = blobServiceClient.getContainerClient(containerName);
 
-  const blobName = file.name;
+    const blobName = file.name;
 
-  const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-  const options: BlockBlobUploadOptions = {
-    blobHTTPHeaders: { blobContentType: file.type },
-  };
+    const options: BlockBlobUploadOptions = {
+      blobHTTPHeaders: { blobContentType: file.type },
+    };
 
-  if (!file) {
-    return NextResponse.error();
+    if (!file) {
+      return NextResponse.error();
+    }
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uploadBlobResponse = await blockBlobClient.upload(
+      buffer,
+      buffer.length,
+      options,
+    );
+
+    return NextResponse.json(uploadBlobResponse);
+  } catch (error) {
+    return NextResponse.json(error);
   }
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-
-  const uploadBlobResponse = await blockBlobClient.upload(
-    buffer,
-    buffer.length,
-    options,
-  );
-
-  return NextResponse.json(uploadBlobResponse);
 }
 
 export async function GET(req: NextRequest, res: NextResponse) {
-  const blobServiceClient = BlobServiceClient.fromConnectionString(
-    AZURE_STORAGE_CONNECTION_STRING,
-  );
+  try {
+    const blobServiceClient = BlobServiceClient.fromConnectionString(
+      AZURE_STORAGE_CONNECTION_STRING,
+    );
 
-  const containerName = "$web";
+    const containerName = "$web";
 
-  const containerClient = blobServiceClient.getContainerClient(containerName);
+    const containerClient = blobServiceClient.getContainerClient(containerName);
 
-  const q = [];
+    const q = [];
 
-  for await (const blob of containerClient.listBlobsFlat()) {
-    const blockBlobClient = containerClient.getBlockBlobClient(blob.name);
+    for await (const blob of containerClient.listBlobsFlat()) {
+      const blockBlobClient = containerClient.getBlockBlobClient(blob.name);
 
-    q.push(blockBlobClient.url);
+      q.push(blockBlobClient.url);
+    }
+
+    return NextResponse.json(q);
+  } catch (error) {
+    return NextResponse.json(error);
   }
-
-  return NextResponse.json(q);
 }
