@@ -12,7 +12,7 @@ export default function Page() {
           Submit
         </button>
         <div>
-          pitäs toimia A11111!!! Hei!{" "}
+          toimiiko tämä pitäs toimia A11111!!! Hei!{" "}
           {process.env.NEXT_PUBLIC_TESTATAAN ?? "Ei olla azuressa"}
         </div>
       </form>
