@@ -11,41 +11,44 @@ on:
 
 jobs:
   build:
-    runs-on: 'ubuntu-latest'
+    runs-on: "ubuntu-latest"
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Log in to registry
-      uses: docker/login-action@v2
-      with:
-        registry: https://mcr.microsoft.com/
-        username: ${{ secrets.AzureAppService_ContainerUsername_1e78037e7d6a423eb62baf7d29ebb106 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_6b6a23b7a898401cabda4b7d316f0137 }}
+      - name: Log in to registry
+        uses: docker/login-action@v2
+        with:
+          registry: https://mcr.microsoft.com/
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
 
-    - name: Build and push container image to registry
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_1e78037e7d6a423eb62baf7d29ebb106 }}/appsvc/staticsite:${{ github.sha }}
-        file: ./Dockerfile
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: mcr.microsoft.com/${{ secrets.ACR_USERNAME }}/appsvc/staticsite:${{ github.sha }}
+          file: ./Dockerfile
+          secrets:
+            | AZURE_CONNECTION_STRING=${{secrets.AZURE_CONNECTION_STRING}}
+            | NEXT_PUBLIC_TESTATAAN="HEI KAIKKI AZURESSA!"
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'production'
+      name: "production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'eeeq'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_fcfe0fa4fb4e42949c61e948c998a008 }}
-        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_1e78037e7d6a423eb62baf7d29ebb106 }}/appsvc/staticsite:${{ github.sha }}'
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "eeeq"
+          slot-name: "production"
+          publish-profile: ${{ secrets.AZURE_PUBLISHPROFILE }}
+          images: "mcr.microsoft.com/${{ secrets.ACR_USERNAME }}/appsvc/staticsite:${{ github.sha }}"
