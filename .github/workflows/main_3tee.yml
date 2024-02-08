@@ -35,6 +35,7 @@ jobs:
           secret-envs: |
             NEXT_PUBLIC_TESTATAAN=${{ secrets.NEXT_PUBLIC_TESTATAAN }}
             AZURE_CONNECTION_STRING=${{secrets.AZURE_CONNECTION_STRING}}
+            NEXT_PUBLIC_HEY=${{secrets.NEXT_PUBLIC_HEY}}
 
   deploy:
     runs-on: ubuntu-latest
