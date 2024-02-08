@@ -21,6 +21,7 @@ export default function Page() {
         <button className="flex justify-normal" type="submit">
           Submit
         </button>
+        {d.toISOString()}
         <div>{process.env.NEXT_PUBLIC_TESTATAAN ?? "Ei olla azuressa"}</div>
       </form>
     </div>
