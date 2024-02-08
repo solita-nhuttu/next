@@ -3,7 +3,7 @@ export default function Page() {
     "use server";
     console.log(formData);
   }
-
+  const d = new Date();
   return (
     <div>
       <form action={create}>
@@ -12,6 +12,7 @@ export default function Page() {
           Submit
         </button>
         <div>
+          <p>{d.toISOString()}</p>
           klo 10.15.
           {process.env.NEXT_PUBLIC_TESTATAAN ?? "Ei olla azuressa"}
         </div>
