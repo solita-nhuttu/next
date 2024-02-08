@@ -6,16 +6,13 @@ export default function Page() {
 
   const testFetch = async () => {
     try {
+      const res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
 
-      const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-      
-      
-      const json = await res.json()
-
-    } catch (error) {console.log(error)}
-
-
-  }
+      const json = await res.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const d = new Date();
   return (
     <div>
@@ -24,11 +21,7 @@ export default function Page() {
         <button className="flex justify-normal" type="submit">
           Submit
         </button>
-        <div>
-          <p>{d.toISOString()}</p>
-          klo 14.16.
-          {process.env.NEXT_PUBLIC_TESTATAAN ?? "Ei olla azuressa"}
-        </div>
+        <div>{process.env.NEXT_PUBLIC_TESTATAAN ?? "Ei olla azuressa"}</div>
       </form>
     </div>
   );
