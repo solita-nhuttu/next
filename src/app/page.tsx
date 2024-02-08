@@ -3,6 +3,19 @@ export default function Page() {
     "use server";
     console.log(formData);
   }
+
+  const testFetch = async () => {
+    try {
+
+      const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+      
+      
+      const json = await res.json()
+
+    } catch (error) {console.log(error)}
+
+
+  }
   const d = new Date();
   return (
     <div>
