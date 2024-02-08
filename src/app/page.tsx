@@ -13,7 +13,7 @@ export default function Page() {
         </button>
         <div>
           <p>{d.toISOString()}</p>
-          klo 10.15.
+          klo 14.16.
           {process.env.NEXT_PUBLIC_TESTATAAN ?? "Ei olla azuressa"}
         </div>
       </form>
