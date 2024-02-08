@@ -3,12 +3,17 @@ import { useState } from "react";
 
 const Testin = () => {
   const [data, setData] = useState();
+  const [num, setNum] = useState(1);
 
   const testFetch = async () => {
     try {
-      const res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+      const res = await fetch(
+        "https://jsonplaceholder.typicode.com/todos/" + num,
+      );
 
       const json = await res.json();
+
+      setNum((prev) => prev + 1);
 
       setData(json);
     } catch (error) {
@@ -16,9 +21,15 @@ const Testin = () => {
     }
   };
 
-  testFetch();
-
-  return <div>{JSON.stringify(data)}</div>;
+  return (
+    <div>
+      {process.env.NEXT_PUBLIC_HEY ?? "ei ole heytä"}
+      <button className="border-solid" onClick={() => testFetch()}>
+        Fetch!
+      </button>
+      {JSON.stringify(data)}
+    </div>
+  );
 };
 
 export default Testin;
