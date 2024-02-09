@@ -6,8 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 const AZURE_STORAGE_CONNECTION_STRING =
   process.env.AZURE_CONNECTION_STRING ?? "";
 
-console.log(AZURE_STORAGE_CONNECTION_STRING, "heiii");
-
 export async function POST(req: NextRequest, res: NextResponse) {
   const data = await req.formData();
 
