@@ -1,8 +1,8 @@
 import { CosmosClient } from "@azure/cosmos";
 import { NextResponse } from "next/server";
 
-const COSMOS_CONNECTION_STRING = process.env.COSMOS_CONNECTION_STRING;
-const client = new CosmosClient(COSMOS_CONNECTION_STRING ?? "");
+const COSMOS_CONNECTION_STRING = process.env.COSMOS_CONNECTION_STRING ?? "";
+const client = new CosmosClient(COSMOS_CONNECTION_STRING);
 const DB_ID = "nhuttudb";
 const CONT_ID = "nhuttucont";
 
