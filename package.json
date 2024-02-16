@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/cosmos": "^4.0.0",
     "@azure/storage-blob": "^12.17.0",
     "dotenv": "^16.4.1",
     "next": "14.1.0",
