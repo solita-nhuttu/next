@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm i
 
+ENV NODE_ENV=production
+
 COPY . .
 
 RUN --mount=type=secret,id=NEXT_PUBLIC_TESTATAAN \
