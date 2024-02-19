@@ -1,5 +1,3 @@
-// pages/api/upload.js
-
 import { BlobServiceClient, BlockBlobUploadOptions } from "@azure/storage-blob";
 import { NextRequest, NextResponse } from "next/server";
 
